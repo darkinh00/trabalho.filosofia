@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trabalho de Filosofia - A Arte do Egito Antigo</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'egypt-gold': '#D4AF37',
+                        'egypt-gold-light': '#F3E5AB',
+                        'egypt-dark': '#0B0B10',
+                        'egypt-panel': '#14141E',
+                        'egypt-card': '#1B1B26',
+                        'egypt-blue': '#0A192F',
+                        'egypt-cobalt': '#1E3A8A'
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* Estilos e Animações CSS */
+        body {
+            background-color: #060609;
+            color: #D1D5DB;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 70%),
+                radial-gradient(circle at 0% 100%, rgba(30, 58, 138, 0.12) 0%, transparent 50%);
+        }
+
+        /* Molduras Egípcias e Frisos */
+        .egyptian-border {
+            border: 2px solid #D4AF37;
+            position: relative;
+            background: linear-gradient(135deg, rgba(20, 20, 30, 0.95), rgba(11, 11, 16, 0.98));
+        }
+        .egyptian-border::before, .egyptian-border::after {
+            content: '❖';
+            position: absolute;
+            color: #D4AF37;
+            font-size: 14px;
+        }
+        .egyptian-border::before { top: -10px; left: -8px; }
+        .egyptian-border::after { bottom: -10px; right: -8px; }
+
+        /* Cartucho Faraônico (Formato de Selo Sagrado) */
+        .cartouche-card {
+            border-radius: 2rem 0.5rem 2rem 0.5rem;
+            border: 1.5px solid rgba(212, 175, 55, 0.4);
+            background: rgba(19, 19, 28, 0.85);
+            backdrop-filter: blur(8px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .cartouche-card:hover {
+            border-color: rgba(212, 175, 55, 0.9);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.25), inset 0 0 15px rgba(212, 175, 55, 0.1);
+            transform: translateY(-4px);
+        }
+
+        /* Divisor Temático */
+        .hieroglyph-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 2rem 0;
+            color: #D4AF37;
+        }
+        .hieroglyph-divider::before, .hieroglyph-divider::after {
+            content: '';
+            height: 1px;
+            width: 80px;
+            background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+        }
+
+        /* Animações por Scroll */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-on-scroll.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Efeitos Glow e Borda Dourada */
+        .gold-border-glow {
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
+            transition: all 0.3s ease;
+        }
+        .gold-border-glow:hover {
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.35);
+            border-color: rgba(212, 175, 55, 0.8);
+        }
+
+        /* Órbita do Sol e da Lua no Hero */
+        @keyframes dayNightCycle {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .orbit-container {
+            animation: dayNightCycle 24s linear infinite;
+        }
+
+        /* Estrelas Cintilantes */
+        @keyframes starPulse {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        .star-twinkle {
+            animation: starPulse 3s ease-in-out infinite alternate;
+        }
+
+        /* Flip Card 3D para os Arquitetos */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1.5rem;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Animações de Botão do Quiz */
+        .quiz-option-btn {
+            transition: all 0.3s ease;
+        }
+        .quiz-option-btn:hover {
+            transform: translateX(6px);
+        }
+    </style>
+</head>
+<body class="bg-egypt-dark text-stone-300 font-sans antialiased overflow-x-hidden">
+
+    <!-- CANVAS DE POEIRA DE OURO DE FUNDO -->
+    <canvas id="gold-particles-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
+
+    <!-- BARRA DE NAVEGAÇÃO -->
+    <nav class="fixed top-0 left-0 right-0 z-40 bg-egypt-dark/95 backdrop-blur-md border-b border-egypt-gold/30 shadow-[0_4px_20px_rgba(0,0,0,0.8)]">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-full border border-egypt-gold/50 flex items-center justify-center bg-egypt-gold/10 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-ankh text-egypt-gold text-xl"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-cinzel text-lg font-bold text-stone-100 tracking-widest">FILOSOFIA</span>
+                    <span class="text-[10px] text-egypt-gold uppercase tracking-[0.2em] font-bold">Arte do Egito Antigo</span>
+                </div>
+            </a>
+
+            <!-- Menu Desktop -->
+            <div class="hidden md:flex items-center gap-8 font-cinzel text-xs font-bold tracking-widest text-stone-300">
+                <a href="#contexto" class="hover:text-egypt-gold transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-egypt-gold hover:after:w-full after:transition-all">1. CONTEXTO</a>
+                <a href="#suportes" class="hover:text-egypt-gold transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-egypt-gold hover:after:w-full after:transition-all">2. SUPORTES</a>
+                <a href="#estetica" class="hover:text-egypt-gold transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-egypt-gold hover:after:w-full after:transition-all">3. ESTÉTICA</a>
+                <a href="#artistas" class="hover:text-egypt-gold transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-egypt-gold hover:after:w-full after:transition-all">4. MESTRES</a>
+                <a href="#legado" class="hover:text-egypt-gold transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-egypt-gold hover:after:w-full after:transition-all">5. LEGADO</a>
+                <a href="#quiz" class="px-5 py-2 rounded-full border-2 border-egypt-gold text-egypt-gold hover:bg-egypt-gold hover:text-egypt-dark transition-all font-extrabold shadow-[0_0_15px_rgba(212,175,55,0.2)]">DESAFIO</a>
+            </div>
+
+            <!-- Botão Mobile -->
+            <button onclick="toggleMobileMenu()" class="md:hidden text-egypt-gold text-2xl focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Menu Mobile Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-egypt-panel border-b border-egypt-gold/20 px-6 py-4 flex flex-col gap-4 font-cinzel text-sm">
+            <a href="#contexto" onclick="toggleMobileMenu()" class="hover:text-egypt-gold">1. Contexto Histórico</a>
+            <a href="#suportes" onclick="toggleMobileMenu()" class="hover:text-egypt-gold">2. Suportes e Meios</a>
+            <a href="#estetica" onclick="toggleMobileMenu()" class="hover:text-egypt-gold">3. Estética e Cores</a>
+            <a href="#artistas" onclick="toggleMobileMenu()" class="hover:text-egypt-gold">4. Grandes Mestres</a>
+            <a href="#legado" onclick="toggleMobileMenu()" class="hover:text-egypt-gold">5. Legado Histórico</a>
+            <a href="#quiz" onclick="toggleMobileMenu()" class="text-egypt-gold font-bold">Desafio Faraônico</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION COM ANIMAÇÃO DA PIRÂMIDE (CICLO SOL E LUA) -->
+    <header class="relative min-h-screen pt-32 pb-20 flex items-center justify-center overflow-hidden z-10 px-6">
+        <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            
+            <!-- Texto Principal do Hero -->
+            <div class="text-left space-y-6">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-egypt-gold/40 bg-egypt-gold/10 text-egypt-gold text-xs font-cinzel font-bold tracking-widest uppercase shadow-[0_0_10px_rgba(212,175,55,0.2)]">
+                    <i class="fa-solid fa-eye"></i> Trabalho de Filosofia • Egito Antigo
+                </div>
+                <h1 class="font-cinzel text-4xl sm:text-5xl lg:text-6xl font-extrabold text-stone-100 leading-tight">
+                    A Arte Sagrada do <span class="text-transparent bg-clip-text bg-gradient-to-r from-egypt-gold via-yellow-200 to-amber-500">Egito Antigo</span>
+                </h1>
+                <p class="text-stone-300 text-base sm:text-lg leading-relaxed font-light">
+                    Uma profunda investigação filosófica sobre a estética da imortalidade, o princípio divino da ordem universal (<em>Ma'at</em>) e os canões de arte monumental nas margens do Nilo.
+                </p>
+
+                <!-- Ícones de Hieróglifos Estilizados no Hero -->
+                <div class="hieroglyph-divider !justify-start my-4">
+                    <i class="fa-solid fa-ankh"></i>
+                    <i class="fa-solid fa-eye"></i>
+                    <i class="fa-solid fa-[#D4AF37] fa-feather"></i>
+                    <i class="fa-solid fa-pyramid"></i>
+                </div>
+
+                <div class="pt-2 flex flex-wrap gap-4">
+                    <a href="#contexto" class="px-8 py-4 rounded-xl bg-gradient-to-r from-egypt-gold via-amber-500 to-amber-600 text-egypt-dark font-cinzel font-bold tracking-wider hover:brightness-110 transition-all shadow-[0_4px_25px_rgba(212,175,55,0.3)]">
+                        Iniciar Exploração <i class="fa-solid fa-arrow-down ml-2"></i>
+                    </a>
+                    <a href="#quiz" class="px-8 py-4 rounded-xl border-2 border-egypt-gold/60 text-egypt-gold font-cinzel font-semibold hover:bg-egypt-gold/10 transition-all">
+                        Desafio dos Faraós
+                    </a>
+                </div>
+            </div>
+
+            <!-- ILUSTRAÇÃO ANIMADA: CICLO DIA/NOITE DA PIRÂMIDE -->
+            <div class="relative w-full aspect-square max-w-[450px] mx-auto flex items-center justify-center">
+                <!-- Moldura Estilizada Sagrada -->
+                <div class="absolute -inset-4 rounded-full border border-egypt-gold/20 animate-spin" style="animation-duration: 60s;"></div>
+                
+                <!-- Halo de Fundo da Animação -->
+                <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-amber-500/10 via-blue-900/20 to-purple-900/10 blur-2xl"></div>
+
+                <!-- Estrutura de Órbita 360° -->
+                <div class="orbit-container absolute w-full h-full rounded-full border border-egypt-gold/20 flex items-center justify-center">
+                    <!-- Sol de Rá (Topo da Órbita) -->
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-amber-400 shadow-[0_0_40px_rgba(251,191,36,0.9)] flex items-center justify-center text-amber-950 font-bold">
+                        <i class="fa-solid fa-sun text-2xl text-amber-900 animate-spin" style="animation-duration: 20s;"></i>
+                    </div>
+                    <!-- Lua de Khonsu (Base da Órbita) -->
+                    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-12 h-12 rounded-full bg-slate-200 shadow-[0_0_30px_rgba(255,255,255,0.7)] flex items-center justify-center">
+                        <i class="fa-solid fa-moon text-xl text-slate-800"></i>
+                    </div>
+                </div>
+
+                <!-- Vetor SVG da Grande Pirâmide -->
+                <div class="relative z-10 w-4/5 h-4/5 flex items-center justify-center drop-shadow-[0_10px_25px_rgba(0,0,0,0.8)]">
+                    <svg viewBox="0 0 300 300" class="w-full h-full overflow-visible">
+                        <defs>
+                            <linearGradient id="pyrGradLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#F3E5AB" />
+                                <stop offset="100%" stop-color="#B38728" />
+                            </linearGradient>
+                            <linearGradient id="pyrGradRight" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#997217" />
+                                <stop offset="100%" stop-color="#4A3405" />
+                            </linearGradient>
+                            <linearGradient id="goldCap" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#FFF5C0" />
+                                <stop offset="100%" stop-color="#D4AF37" />
+                            </linearGradient>
+                        </defs>
+                        <!-- Estrelas ao Redor -->
+                        <circle cx="40" cy="50" r="1.5" fill="#FFF" class="star-twinkle" />
+                        <circle cx="260" cy="70" r="2" fill="#FFD700" class="star-twinkle" />
+                        <circle cx="280" cy="180" r="1.5" fill="#FFF" class="star-twinkle" />
+
+                        <!-- Base da Pirâmide -->
+                        <polygon points="20,240 150,60 150,240" fill="url(#pyrGradLeft)" />
+                        <polygon points="150,60 280,240 150,240" fill="url(#pyrGradRight)" />
+                        
+                        <!-- Capuchão de Ouro (Benben) -->
+                        <polygon points="135,81 150,60 165,81" fill="url(#goldCap)" />
+
+                        <!-- Linhas de Construção Estilizadas -->
+                        <line x1="20" y1="240" x2="280" y2="240" stroke="#D4AF37" stroke-width="3" />
+                        <line x1="150" y1="60" x2="150" y2="240" stroke="#7A5807" stroke-width="1.5" />
+                        <line x1="52" y1="195" x2="150" y2="195" stroke="rgba(212,175,55,0.4)" stroke-width="1" />
+                        <line x1="85" y1="150" x2="150" y2="150" stroke="rgba(212,175,55,0.4)" stroke-width="1" />
+                        <line x1="118" y1="105" x2="150" y2="105" stroke="rgba(212,175,55,0.4)" stroke-width="1" />
+
+                        <!-- Portal Sagrado na Base -->
+                        <polygon points="140,240 150,215 160,240" fill="#0B0B10" stroke="#D4AF37" stroke-width="1.5" />
+                    </svg>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- SEÇÃO 1: CONTEXTO HISTÓRICO E SOCIEDADE -->
+    <section id="contexto" class="py-24 bg-egypt-panel/80 border-t border-egypt-gold/20 relative">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal-on-scroll">
+                <span class="text-egypt-gold text-xs font-cinzel font-bold tracking-[0.3em] uppercase block mb-2">Capítulo I</span>
+                <h2 class="font-cinzel text-3xl sm:text-4xl font-extrabold text-stone-100">Onde, Quando e Sociedade</h2>
+                <div class="hieroglyph-divider">
+                    <i class="fa-solid fa-scroll"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="cartouche-card p-8 reveal-on-scroll">
+                    <div class="w-14 h-14 rounded-2xl bg-egypt-gold/10 border border-egypt-gold/30 flex items-center justify-center text-egypt-gold text-2xl mb-6">
+                        <i class="fa-solid fa-compass"></i>
+                    </div>
+                    <h3 class="font-cinzel text-xl font-bold text-stone-100 mb-3">Tempo e Geografia</h3>
+                    <p class="text-stone-300 text-sm leading-relaxed font-light">
+                        Floresceu nas margens férteis do Rio Nilo, durando mais de 3.000 anos (de ~3100 a.C. à dominação romana em 30 a.C.).
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="cartouche-card p-8 reveal-on-scroll">
+                    <div class="w-14 h-14 rounded-2xl bg-egypt-gold/10 border border-egypt-gold/30 flex items-center justify-center text-egypt-gold text-2xl mb-6">
+                        <i class="fa-solid fa-crown"></i>
+                    </div>
+                    <h3 class="font-cinzel text-xl font-bold text-stone-100 mb-3">Teocracia Absoluta</h3>
+                    <p class="text-stone-300 text-sm leading-relaxed font-light">
+                        O Faraó era venerado como a encarnação viva do deus Hórus na Terra, mantendo o equilíbrio harmônico do cosmos (<em>Ma'at</em>).
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="cartouche-card p-8 reveal-on-scroll">
+                    <div class="w-14 h-14 rounded-2xl bg-egypt-gold/10 border border-egypt-gold/30 flex items-center justify-center text-egypt-gold text-2xl mb-6">
+                        <i class="fa-solid fa-ankh"></i>
+                    </div>
+                    <h3 class="font-cinzel text-xl font-bold text-stone-100 mb-3">A Busca pela Eternidade</h3>
+                    <p class="text-stone-300 text-sm leading-relaxed font-light">
+                        A arte visava assegurar a transição da alma (<em>Ká</em>) para a imortalidade, transformando templos e túmulos em portais sagrados.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 2: SUPORTES E MEIOS UTILIZADOS -->
+    <section id="suportes" class="py-24 bg-egypt-dark relative">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal-on-scroll">
+                <span class="text-egypt-gold text-xs font-cinzel font-bold tracking-[0.3em] uppercase block mb-2">Capítulo II</span>
+                <h2 class="font-cinzel text-3xl sm:text-4xl font-extrabold text-stone-100">Suportes e Meios Artísticos</h2>
+                <div class="hieroglyph-divider">
+                    <i class="fa-solid fa-monument"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Lista de Suportes -->
+                <div class="space-y-6 reveal-on-scroll">
+                    <div class="cartouche-card p-6 flex gap-5 items-start">
+                        <div class="text-egypt-gold text-2xl pt-1"><i class="fa-solid fa-landmark"></i></div>
+                        <div>
+                            <h3 class="font-cinzel text-lg font-bold text-stone-100 mb-1">Arquitetura Monumental</h3>
+                            <p class="text-stone-300 text-sm font-light">Estruturas eternas em pedra calcária e granito: Pirâmides, Mastabas e Templos (ex: Karnak e Luxor).</p>
+                        </div>
+                    </div>
+
+                    <div class="cartouche-card p-6 flex gap-5 items-start">
+                        <div class="text-egypt-gold text-2xl pt-1"><i class="fa-solid fa-person"></i></div>
+                        <div>
+                            <h3 class="font-cinzel text-lg font-bold text-stone-100 mb-1">Escultura Rígida e Simétrica</h3>
+                            <p class="text-stone-300 text-sm font-light">Estátuas funerárias projetadas com postura solene para abrigar o espírito vital do falecido.</p>
+                        </div>
+                    </div>
+
+                    <div class="cartouche-card p-6 flex gap-5 items-start">
+                        <div class="text-egypt-gold text-2xl pt-1"><i class="fa-solid fa-scroll"></i></div>
+                        <div>
+                            <h3 class="font-cinzel text-lg font-bold text-stone-100 mb-1">Pinturas Murais & Papiro</h3>
+                            <p class="text-stone-300 text-sm font-light">Têmpera sobre gesso em paredes de tumbas e ilustrações sagradas no Livro dos Mortos.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Imagem Destacada com Lightbox -->
+                <div class="relative rounded-3xl overflow-hidden border-2 border-egypt-gold/40 shadow-[0_10px_30px_rgba(0,0,0,0.8)] group cursor-pointer reveal-on-scroll">
+                    <img src="https://cdn.mos.cms.futurecdn.net/v2/t:0,l:240,cw:1440,ch:1080,q:80,w:1440/YMa7Wx2FyjQFUjEeqa72Rm.jpg" alt="Pirâmides e Esfinge de Gizé" class="w-full h-80 sm:h-96 object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-egypt-dark via-transparent to-transparent flex items-end p-6">
+                        <span class="text-xs font-cinzel text-egypt-gold font-bold tracking-widest"><i class="fa-solid fa-magnifying-glass-plus mr-2"></i> Clique para ampliar • Pirâmides de Gizé</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 3: ESTÉTICA, CORES E LEI DA FRONTALIDADE -->
+    <section id="estetica" class="py-24 bg-egypt-panel/90 border-t border-egypt-gold/20">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal-on-scroll">
+                <span class="text-egypt-gold text-xs font-cinzel font-bold tracking-[0.3em] uppercase block mb-2">Capítulo III</span>
+                <h2 class="font-cinzel text-3xl sm:text-4xl font-extrabold text-stone-100">Estética e Regras Visuais</h2>
+                <div class="hieroglyph-divider">
+                    <i class="fa-solid fa-eye"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+                <!-- Imagem da Lei da Frontalidade -->
+                <div class="relative rounded-3xl overflow-hidden border-2 border-egypt-gold/40 shadow-[0_10px_30px_rgba(0,0,0,0.8)] group cursor-pointer reveal-on-scroll">
+                    <img src="https://egypttourmagic.com/wp-content/uploads/2024/09/The-Tomb-of-Nefertari.jpg" alt="Pintura da Tumba de Nefertari" class="w-full h-80 sm:h-96 object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-egypt-dark via-transparent to-transparent flex items-end p-6">
+                        <span class="text-xs font-cinzel text-egypt-gold font-bold tracking-widest"><i class="fa-solid fa-magnifying-glass-plus mr-2"></i> Tumba de Nefertari • Lei da Frontalidade</span>
+                    </div>
+                </div>
+
+                <!-- Tópicos de Estética -->
+                <div class="space-y-6 reveal-on-scroll">
+                    <div class="cartouche-card p-6 border-l-4 border-l-egypt-gold">
+                        <h3 class="font-cinzel text-xl font-bold text-stone-100 mb-2">A Lei da Frontalidade</h3>
+                        <p class="text-stone-300 text-sm leading-relaxed font-light">
+                            O tronco é mostrado de frente, enquanto a cabeça, olhos, pernas e pés são retratados de perfil. A prioridade era a clareza conceitual da figura humana, não o realismo visual.
+                        </p>
+                    </div>
+
+                    <div class="cartouche-card p-6 border-l-4 border-l-egypt-gold">
+                        <h3 class="font-cinzel text-xl font-bold text-stone-100 mb-2">Hierarquia das Escalas</h3>
+                        <p class="text-stone-300 text-sm leading-relaxed font-light">
+                            A estatura dos personagens no desenho definia a sua hierarquia social e status divino: os faraós e deuses eram desenhados em dimensões significativamente maiores.
+                        </p>
+                    </div>
+
+                    <div class="cartouche-card p-6 border-l-4 border-l-egypt-gold">
+                        <h3 class="font-cinzel text-xl font-bold text-stone-100 mb-2">Contornos Firmes sem Sombras</h3>
+                        <p class="text-stone-300 text-sm leading-relaxed font-light">
+                            Pinturas bidimensionais delineadas com pigmento preto e preenchidas com cores puras e vibrantes, sem uso de sombras ou efeito tridimensional.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SIMBOLISMO DAS CORES -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 reveal-on-scroll">
+                <div class="cartouche-card p-6 text-center border-t-4 border-t-blue-500">
+                    <div class="w-10 h-10 rounded-full bg-blue-600 mx-auto mb-3 shadow-[0_0_15px_rgba(37,99,235,0.5)]"></div>
+                    <h4 class="font-cinzel text-sm font-bold text-stone-100">Azul (Khesebedj)</h4>
+                    <p class="text-stone-400 text-xs mt-1 font-light">O Nilo, o céu sagrado e o poder divino.</p>
+                </div>
+                <div class="cartouche-card p-6 text-center border-t-4 border-t-amber-400">
+                    <div class="w-10 h-10 rounded-full bg-amber-400 mx-auto mb-3 shadow-[0_0_15px_rgba(251,191,36,0.5)]"></div>
+                    <h4 class="font-cinzel text-sm font-bold text-stone-100">Amarelo (Ketj)</h4>
+                    <p class="text-stone-400 text-xs mt-1 font-light">O Sol de Rá, o ouro e a carne dos deuses.</p>
+                </div>
+                <div class="cartouche-card p-6 text-center border-t-4 border-t-emerald-500">
+                    <div class="w-10 h-10 rounded-full bg-emerald-600 mx-auto mb-3 shadow-[0_0_15px_rgba(5,150,105,0.5)]"></div>
+                    <h4 class="font-cinzel text-sm font-bold text-stone-100">Verde (Uadj)</h4>
+                    <p class="text-stone-400 text-xs mt-1 font-light">Vegetação, renascimento e Osíris.</p>
+                </div>
+                <div class="cartouche-card p-6 text-center border-t-4 border-t-rose-500">
+                    <div class="w-10 h-10 rounded-full bg-rose-600 mx-auto mb-3 shadow-[0_0_15px_rgba(225,29,72,0.5)]"></div>
+                    <h4 class="font-cinzel text-sm font-bold text-stone-100">Vermelho (Desher)</h4>
+                    <p class="text-stone-400 text-xs mt-1 font-light">Fogo, deserto vital e força física.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 4: PRINCIPAIS MESTRES (CARDS FLIP 3D) -->
+    <section id="artistas" class="py-24 bg-egypt-dark">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal-on-scroll">
+                <span class="text-egypt-gold text-xs font-cinzel font-bold tracking-[0.3em] uppercase block mb-2">Capítulo IV</span>
+                <h2 class="font-cinzel text-3xl sm:text-4xl font-extrabold text-stone-100">Mestres Arquitetos</h2>
+                <p class="text-stone-400 text-sm mt-2">Passe o cursor para girar em 3D e revelar o legado no verso</p>
+                <div class="hieroglyph-divider">
+                    <i class="fa-solid fa-crown"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Card 1: Imhotep -->
+                <div class="h-[340px] perspective-1000 flip-card reveal-on-scroll">
+                    <div class="flip-card-inner">
+                        <!-- Frente -->
+                        <div class="flip-card-front cartouche-card p-8 flex flex-col sm:flex-row gap-6 items-center">
+                            <img src="https://hurghadalovers.com/wp-content/uploads/2022/10/Imhotep-History-and-facts-of-the-first-architects-and-doctors-in-history-800x530.jpg" alt="Imhotep" class="w-32 h-32 rounded-full object-cover border-2 border-egypt-gold shadow-2xl">
+                            <div>
+                                <span class="text-egypt-gold text-xs font-bold uppercase tracking-widest block mb-1">Mestre Arquiteto</span>
+                                <h3 class="font-cinzel text-2xl font-bold text-stone-100">Imhotep</h3>
+                                <span class="text-stone-400 text-xs font-semibold block mb-3">Séc. XXVII a.C. • 3ª Dinastia</span>
+                                <p class="text-stone-300 text-xs leading-relaxed font-light">
+                                    O primeiro arquiteto, engenheiro e médico de nome registrado na história da humanidade.
+                                </p>
+                                <span class="inline-flex items-center gap-2 text-xs font-cinzel text-egypt-gold font-bold mt-4">
+                                    Girar cartão <i class="fa-solid fa-rotate"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- Verso -->
+                        <div class="flip-card-back cartouche-card border-2 border-egypt-gold p-8 flex flex-col justify-center items-center text-center">
+                            <i class="fa-solid fa-pyramid text-3xl text-egypt-gold mb-3"></i>
+                            <h4 class="font-cinzel text-lg font-bold text-stone-100 mb-2">Revolução da Pedra</h4>
+                            <p class="text-stone-300 text-xs leading-relaxed mb-4 font-light">
+                                Projetou a famosa Pirâmide de Degraus de Saqqara para o faraó Djoser, substituindo os tradicionais tijolos de barro por blocos de pedra cortada.
+                            </p>
+                            <span class="px-4 py-1.5 rounded-full bg-egypt-gold/20 text-egypt-gold text-xs font-cinzel font-bold border border-egypt-gold/40">
+                                Deificado como Deus da Sabedoria
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Senenmut -->
+                <div class="h-[340px] perspective-1000 flip-card reveal-on-scroll">
+                    <div class="flip-card-inner">
+                        <!-- Frente -->
+                        <div class="flip-card-front cartouche-card p-8 flex flex-col sm:flex-row gap-6 items-center">
+                            <img src="https://egypt-museum.com/wp-content/uploads/2023/09/Statue-of-Senenmut-holding-Neferure-daughter-of-Hatshepsut.jpg" alt="Senenmut" class="w-32 h-32 rounded-full object-cover border-2 border-egypt-gold shadow-2xl">
+                            <div>
+                                <span class="text-egypt-gold text-xs font-bold uppercase tracking-widest block mb-1">Mestre Arquiteto</span>
+                                <h3 class="font-cinzel text-2xl font-bold text-stone-100">Senenmut</h3>
+                                <span class="text-stone-400 text-xs font-semibold block mb-3">Séc. XV a.C. • Novo Império</span>
+                                <p class="text-stone-300 text-xs leading-relaxed font-light">
+                                    Arquiteto real e conselheiro principal da influente Rainha-Faraó Hatshepsut.
+                                </p>
+                                <span class="inline-flex items-center gap-2 text-xs font-cinzel text-egypt-gold font-bold mt-4">
+                                    Girar cartão <i class="fa-solid fa-rotate"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- Verso -->
+                        <div class="flip-card-back cartouche-card border-2 border-egypt-gold p-8 flex flex-col justify-center items-center text-center">
+                            <i class="fa-solid fa-landmark text-3xl text-egypt-gold mb-3"></i>
+                            <h4 class="font-cinzel text-lg font-bold text-stone-100 mb-2">Templo de Deir el-Bahari</h4>
+                            <p class="text-stone-300 text-xs leading-relaxed mb-4 font-light">
+                                Criou o magnífico templo funerário de Hatshepsut incrustado nos rochedos de calcário e inovou na produção das "estátuas-bloco".
+                            </p>
+                            <span class="px-4 py-1.5 rounded-full bg-egypt-gold/20 text-egypt-gold text-xs font-cinzel font-bold border border-egypt-gold/40">
+                                Inovador de Formas Monumentais
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 5: INFLUÊNCIA HISTÓRICA E LEGADO -->
+    <section id="legado" class="py-24 bg-egypt-panel/90 border-t border-egypt-gold/20">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal-on-scroll">
+                <span class="text-egypt-gold text-xs font-cinzel font-bold tracking-[0.3em] uppercase block mb-2">Capítulo V</span>
+                <h2 class="font-cinzel text-3xl sm:text-4xl font-extrabold text-stone-100">Legado Histórico e Filosofia</h2>
+                <div class="hieroglyph-divider">
+                    <i class="fa-solid fa-feather"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="cartouche-card p-8 reveal-on-scroll">
+                    <h3 class="font-cinzel text-lg font-bold text-egypt-gold mb-3">Influência Grega</h3>
+                    <p class="text-stone-300 text-sm leading-relaxed font-light">
+                        A estatuária grega arcaica (<em>Kouros</em>) e a arquitetura de colunas foram diretamente inspiradas pela rigidez e escala dos canões egípcios.
+                    </p>
+                </div>
+
+                <div class="cartouche-card p-8 reveal-on-scroll">
+                    <h3 class="font-cinzel text-lg font-bold text-egypt-gold mb-3">Engenharia em Pedra</h3>
+                    <p class="text-stone-300 text-sm leading-relaxed font-light">
+                        Pioneiros no manuseio e corte preciso de blocos gigantescos de rocha, influenciando construtores por todo o Mediterrâneo Ocidental.
+                    </p>
+                </div>
+
+                <div class="cartouche-card p-8 reveal-on-scroll">
+                    <h3 class="font-cinzel text-lg font-bold text-egypt-gold mb-3">Linguagem Simbólica</h3>
+                    <p class="text-stone-300 text-sm leading-relaxed font-light">
+                        O primeiro sistema artístico e conceitual integrado totalmente voltado para transcender o tempo e preservar a memória da civilização.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO DE QUIZ INTERATIVO (DESAFIO DOS FARAÓS) -->
+    <section id="quiz" class="py-24 bg-egypt-dark relative">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="text-center mb-12 reveal-on-scroll">
+                <span class="text-egypt-gold text-xs font-cinzel font-bold tracking-[0.3em] uppercase block mb-2">Avaliação de Conhecimentos</span>
+                <h2 class="font-cinzel text-3xl sm:text-4xl font-extrabold text-stone-100">O Desafio dos Faraós</h2>
+                <p class="text-stone-400 text-sm mt-2">Teste o seu domínio sobre a filosofia e os canões de arte egípcia</p>
+                <div class="hieroglyph-divider">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+            </div>
+
+            <div class="cartouche-card border-2 border-egypt-gold/60 rounded-3xl p-8 sm:p-10 shadow-2xl relative overflow-hidden reveal-on-scroll">
+                
+                <!-- Caixa de Pergunta -->
+                <div id="question-box">
+                    <div class="flex justify-between items-center mb-6 text-xs font-cinzel text-egypt-gold font-bold tracking-widest">
+                        <span id="quiz-progress">Pergunta 1 de 4</span>
+                        <span id="quiz-score">Pontuação: 0</span>
+                    </div>
+
+                    <h3 id="quiz-question" class="font-cinzel text-xl font-bold text-stone-100 mb-8 leading-snug">
+                        Carregando pergunta...
+                    </h3>
+
+                    <div id="quiz-options" class="space-y-4">
+                        <!-- Opções geradas dinamicamente por JS -->
+                    </div>
+                </div>
+
+                <!-- Tela de Resultado -->
+                <div id="quiz-result" class="hidden text-center py-8">
+                    <i class="fa-solid fa-trophy text-6xl text-egypt-gold mb-4 animate-bounce"></i>
+                    <h3 class="font-cinzel text-2xl font-bold text-stone-100 mb-2">Desafio Concluído!</h3>
+                    <p id="result-text" class="text-stone-300 text-lg mb-8 font-light"></p>
+                    <button onclick="resetQuiz()" class="px-8 py-3.5 rounded-full bg-gradient-to-r from-egypt-gold to-amber-600 text-egypt-dark font-cinzel font-bold hover:brightness-110 transition-all shadow-[0_4px_20px_rgba(212,175,55,0.3)]">
+                        Tentar Novamente <i class="fa-solid fa-rotate-right ml-2"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- RODAPÉ DA PÁGINA -->
+    <footer class="py-12 bg-egypt-panel border-t border-egypt-gold/30 text-center text-xs text-stone-400">
+        <div class="max-w-6xl mx-auto px-6 space-y-4">
+            <div class="flex justify-center items-center gap-4 text-egypt-gold text-2xl">
+                <i class="fa-solid fa-eye"></i>
+                <i class="fa-solid fa-ankh"></i>
+                <i class="fa-solid fa-pyramid"></i>
+            </div>
+            <p class="font-cinzel text-stone-200 font-bold tracking-widest">TRABALHO DE FILOSOFIA • A ARTE DO EGITO ANTIGO</p>
+            <p class="text-stone-400 font-light">Desenvolvido com design temático egípcio para apresentação escolar/acadêmica.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL LIGHTBOX DE IMAGENS -->
+    <div id="image-modal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex items-center justify-center p-4" onclick="closeLightbox()">
+        <div class="relative max-w-4xl w-full" onclick="event.stopPropagation()">
+            <button onclick="closeLightbox()" class="absolute -top-12 right-0 text-stone-300 hover:text-egypt-gold text-3xl font-bold">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <img id="modal-img" src="" alt="" class="w-full h-auto max-h-[80vh] object-contain rounded-2xl border-2 border-egypt-gold shadow-2xl">
+            <p id="modal-caption" class="text-center font-cinzel text-egypt-gold mt-4 text-sm font-bold tracking-wider"></p>
+        </div>
+    </div>
+
+    <!-- SCRIPT DE INTERATIVIDADE E QUIZ -->
+    <script>
+        // --- 1. CANVAS DE POEIRA DE OURO ---
+        (function initGoldParticles() {
+            const pCanvas = document.getElementById('gold-particles-canvas');
+            if (!pCanvas) return;
+            const pCtx = pCanvas.getContext('2d');
+            if (!pCtx) return;
+
+            let particles = [];
+            function resizeCanvas() {
+                pCanvas.width = window.innerWidth;
+                pCanvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            class Particle {
+                constructor() { this.reset(); }
+                reset() {
+                    this.x = Math.random() * (pCanvas.width || window.innerWidth);
+                    this.y = Math.random() * (pCanvas.height || window.innerHeight);
+                    this.size = Math.random() * 2 + 0.5;
+                    this.speedY = -(Math.random() * 0.4 + 0.1);
+                    this.speedX = (Math.random() - 0.5) * 0.3;
+                    this.opacity = Math.random() * 0.7 + 0.2;
+                }
+                update() {
+                    this.y += this.speedY;
+                    this.x += this.speedX;
+                    if (this.y < 0) this.reset();
+                }
+                draw() {
+                    pCtx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`;
+                    pCtx.beginPath();
+                    pCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    pCtx.fill();
+                }
+            }
+
+            for (let i = 0; i < 45; i++) particles.push(new Particle());
+
+            function animateParticles() {
+                pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+                particles.forEach(p => { p.update(); p.draw(); });
+                requestAnimationFrame(animateParticles);
+            }
+            animateParticles();
+        })();
+
+        // --- 2. MENU MOBILE ---
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu) menu.classList.toggle('hidden');
+        }
+
+        // --- 3. REVEAL ON SCROLL ---
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('revealed');
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+        }
+
+        // --- 4. LIGHTBOX DE IMAGENS ---
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('img').forEach(img => {
+                img.addEventListener('click', () => {
+                    const modal = document.getElementById('image-modal');
+                    const modalImg = document.getElementById('modal-img');
+                    const modalCaption = document.getElementById('modal-caption');
+                    if (modal && modalImg && img.src) {
+                        modalImg.src = img.src;
+                        if (modalCaption) modalCaption.innerText = img.alt || 'Arte do Egito Antigo';
+                        modal.classList.remove('hidden');
+                    }
+                });
+            });
+            loadQuestion();
+        });
+
+        function closeLightbox() {
+            const modal = document.getElementById('image-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        // --- 5. LÓGICA DO QUIZ ---
+        const questions = [
+            {
+                q: "Qual era o principal objetivo filosófico da Arte no Egito Antigo?",
+                options: [
+                    "Decorar espaços públicos para diversão e comércio.",
+                    "Garantir a imortalidade do espírito (Ká) e manter a ordem cósmica (Ma'at).",
+                    "Retratar paisagens naturais com perspectiva realista."
+                ],
+                correct: 1
+            },
+            {
+                q: "O que estabelece a famosa 'Lei da Frontalidade' na pintura egípcia?",
+                options: [
+                    "Corpo e perfil inteiramente voltados para a frente.",
+                    "Tronco de frente; cabeça, olhos, pernas e pés representados de perfil.",
+                    "Desenho em 3D com jogo de sombras e iluminação realista."
+                ],
+                correct: 1
+            },
+            {
+                q: "Quem foi o mestre arquiteto responsável pela Pirâmide de Degraus de Saqqara?",
+                options: [
+                    "Senenmut",
+                    "Ramsés II",
+                    "Imhotep"
+                ],
+                correct: 2
+            },
+            {
+                q: "Na simbologia das cores egípcias, o que a cor Azul (Khesebedj) representava?",
+                options: [
+                    "O deserto e o fogo.",
+                    "O Rio Nilo, o céu e a divindade eterna.",
+                    "A agricultura e o trigo."
+                ],
+                correct: 1
+            }
+        ];
+
+        let currentQ = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const q = questions[currentQ];
+            const progressEl = document.getElementById('quiz-progress');
+            const scoreEl = document.getElementById('quiz-score');
+            const questionEl = document.getElementById('quiz-question');
+            const optsDiv = document.getElementById('quiz-options');
+
+            if (!optsDiv || !q) return;
+
+            if (progressEl) progressEl.innerText = `Pergunta ${currentQ + 1} de ${questions.length}`;
+            if (scoreEl) scoreEl.innerText = `Pontuação: ${score}`;
+            if (questionEl) questionEl.innerText = q.q;
+
+            optsDiv.innerHTML = '';
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "quiz-option-btn w-full text-left p-4 rounded-xl border border-egypt-gold/30 bg-egypt-dark hover:bg-egypt-gold/20 hover:border-egypt-gold transition-all text-stone-200 text-sm flex items-center justify-between";
+                btn.innerHTML = `<span>${String.fromCharCode(65 + idx)}) ${opt}</span> <i class="fa-solid fa-chevron-right text-xs text-egypt-gold"></i>`;
+                btn.onclick = () => checkAnswer(idx, btn);
+                optsDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selected, btnElement) {
+            const allBtns = document.querySelectorAll('#quiz-options button');
+            allBtns.forEach(b => b.disabled = true);
+
+            if (selected === questions[currentQ].correct) {
+                score += 10;
+                btnElement.classList.remove('bg-egypt-dark', 'border-egypt-gold/30');
+                btnElement.classList.add('bg-emerald-950/80', 'border-emerald-500', 'text-emerald-200');
+            } else {
+                btnElement.classList.remove('bg-egypt-dark', 'border-egypt-gold/30');
+                btnElement.classList.add('bg-rose-950/80', 'border-rose-500', 'text-rose-200');
+                
+                const correctBtn = allBtns[questions[currentQ].correct];
+                if (correctBtn) {
+                    correctBtn.classList.remove('bg-egypt-dark');
+                    correctBtn.classList.add('bg-emerald-950/60', 'border-emerald-500');
+                }
+            }
+
+            setTimeout(() => {
+                currentQ++;
+                if (currentQ < questions.length) {
+                    loadQuestion();
+                } else {
+                    showResult();
+                }
+            }, 1200);
+        }
+
+        function showResult() {
+            const qBox = document.getElementById('question-box');
+            const res = document.getElementById('quiz-result');
+            const resText = document.getElementById('result-text');
+            
+            if (qBox) qBox.classList.add('hidden');
+            if (res) res.classList.remove('hidden');
+            if (resText) resText.innerText = `Você obteve ${score} de ${questions.length * 10} pontos no Desafio Faraônico!`;
+        }
+
+        function resetQuiz() {
+            currentQ = 0;
+            score = 0;
+            const res = document.getElementById('quiz-result');
+            const qBox = document.getElementById('question-box');
+            if (res) res.classList.add('hidden');
+            if (qBox) qBox.classList.remove('hidden');
+            loadQuestion();
+        }
+    </script>
+</body>
+</html>
